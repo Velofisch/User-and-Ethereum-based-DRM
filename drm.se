@@ -1,0 +1,47 @@
+# register works and derivative works
+# First steps towards a user centered DRM
+# Hackathon Geneva CUI 11-26-2014 Jörn Erbguth joern@erbguth.net
+
+OFFSET_DATASPACE = 2**160
+
+# Index by the hashcode of the work
+OFFSET_WORK = OFFSET_DATASPACE
+OFFSET_TIMESTAMP=2*OFFSET_DATASPACE
+OFFSET_CONTRACT=3*OFFSET_DATASPACE
+OFFSET_PREVIOUS_WORK = 4*OFFSET_DATASPACE
+
+# Last work from creator
+OFFSET_CREATORS=5*OFFSET_DATASPACE
+
+# Number of works per creator
+OFFSET_WORKCOUNT=0
+
+def code():
+# Arguments are passed one byte wrong so I still use msg.data[], did neither find how to pass function names - so first argument is function
+ function=msg.data[0]
+ # simple register
+ if function==1
+  workHash=msg.data[1]
+  # Simple register only Argument: Hashcode of the work
+  creator = msg.sender
+  if self.storage[OFFSET_WORK+workHash]:
+   # Work already registered
+   return (0)
+  else:
+   # Store work
+   self.storage[OFFSET_WORK+workHash]=creator
+   self.storage[workHash+OFFSET_TIMESTAMP]=block.timestamp
+   self.storage[workHash+OFFSET_CONTRACT]='dummy'
+
+   # Store creator work chain
+   if not self.storage[creator+OFFSET_CREATORS]:
+    # create entry
+    self.storage[OFFSET_PREVIOUS_WORK+workHash]=0
+    self.storage[creator+OFFSET_WORKCOUNT]=1
+   else
+    self.storage[OFFSET_PREVIOUS_WORK+workHash]=self.storage[creator+OFFSET_CREATORS]
+    self.storage[creator+OFFSET_WORKCOUNT]=self.storage[creator+OFFSET_WORKCOUNT]+1
+   self.storage[creator+OFFSET_CREATORS]=workHash
+   return(1)
+ else
+  return(0)

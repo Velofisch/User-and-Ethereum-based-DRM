@@ -1,0 +1,41 @@
+<html>
+<!-- Hackathon Geneva CUI 11-26-2014 Jörn Erbguth joern@erbguth.net
+     First steps towards a user driven DRM -->
+<head>
+<title>User Driven DRM</title>
+<style>
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+  }
+
+  output { display:table;}
+  entry { display: table-row;}
+  name {display: table-cell; padding: 10px;}
+  size {display: table-cell; padding: 10px;}
+  date {display: table-cell; padding: 10px;}
+  cell {display: table-cell; padding: 10px;}
+  noimage {display: table-cell; padding: 10px;}
+  type  {display: table-cell; padding: 10px;}
+  register  {display: table-cell; padding: 10px;}
+  .dropzone { border: 1px dashed; height:100px; width:300px; text-align: center; }
+
+</style>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+<script src="drm.js"></script>
+</head>
+<body onload="init();">
+<h1>Personal DRM Registry</h1>
+<h2>Select an account</h2>
+<table>
+   <tr id="rowTemplate"><th align="left"><input id="radioTemplate" type="radio" name="account"></input></th><td id="valueTemplate"></td></tr>
+</table>
+
+<div id="drop_zone" class="dropzone">Drop files here</div>
+<input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+
+
+</body>
+</html>
